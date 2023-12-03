@@ -1,21 +1,23 @@
 package com.example.Dictionary;
 
 import java.io.*;
-import java.util.Objects;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Scanner;
 
 public class DictionaryGUIManagement {
 
     // Method to insert data from a file into the dictionary
     public static void insertDictGUIDataFromFile() throws IOException {
-        try {
-            // Open the file for reading
-            File inputFile = new File("src/main/resources/E_V.txt");
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile)));
+        // Specify the input file path
+        Path inputPath = Paths.get("src/main/resources/E_V.txt");
 
+        try (Scanner scanner = new Scanner(inputPath)) {
             int targetEndIndex = 0;
-            while (bufferedReader.ready()) {
+            while (scanner.hasNextLine()) {
                 // Read each line from the file
-                String line = bufferedReader.readLine();
+                String line = scanner.nextLine();
                 if (!line.isEmpty()) {
                     // Check if the line starts with '@' (indicating a new word)
                     if (line.charAt(0) == '@') {
@@ -45,10 +47,8 @@ public class DictionaryGUIManagement {
                     }
                 }
             }
-            // Close the BufferedReader
-            bufferedReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Please check file directory");
+        } catch (IOException e) {
+            System.out.println("Error reading from the dictionary file");
         }
     }
 
@@ -72,60 +72,68 @@ public class DictionaryGUIManagement {
 
     // Method to compare two strings
     private static int compareWords(String word1, String word2) {
-        int index = 0;
-        while (index < word1.length() && index < word2.length()) {
-            if (word1.charAt(index) > word2.charAt(index)) {
-                return 1;
-            }
-            if (word1.charAt(index) < word2.charAt(index)) {
-                return -1;
-            }
-            index++;
-        }
-        return Integer.compare(word1.length(), word2.length());
+        return word1.compareTo(word2);
     }
+
 
     // Method to add a new word to the dictionary
     public static boolean addWord(String target, String spelling, String definition) {
+        // Create a new Word object with the provided parameters
         Word newWord = new Word(target, spelling, definition);
-        for (int i = 1; i < DictionaryGUI.dict.size() - 1; i++) {
-            if (compareWords(DictionaryGUI.dict.get(i).getWord_target(), target) == 0) {
-                return false;
-            }
 
-            if (compareWords(DictionaryGUI.dict.get(i).getWord_target(), target) < 0 &&
-                    compareWords(DictionaryGUI.dict.get(i + 1).getWord_target(), target) > 0) {
-                DictionaryGUI.dict.add(i + 1, newWord);
-                return true;
-            }
+        // Retrieve the dictionary from the GUI
+        List<Word> dict = DictionaryGUI.dict;
+
+        // Find the correct position to insert newWord into the list in ascending order of target
+        int indexToInsert = 0;
+        while (indexToInsert < dict.size() && compareWords(dict.get(indexToInsert).getWord_target(), target) < 0) {
+            indexToInsert++;
         }
-        DictionaryGUI.dict.add(newWord);
+
+        // Check for duplicates
+        if (indexToInsert < dict.size() && compareWords(dict.get(indexToInsert).getWord_target(), target) == 0) {
+            // If the target word already exists in the dictionary, return false (not added)
+            return false;
+        }
+
+        // Insert newWord into the dictionary at the determined position
+        dict.add(indexToInsert, newWord);
+
+        // Return true to indicate that the word has been successfully added
         return true;
     }
 
-    // Method to remove a word from the dictionary
-    public static void removeWord(int index) {
-        DictionaryGUI.dict.remove(index);
+
+    // Method to lookup a word in the dictionary and return its index
+    public static int DictionaryGUILookup(String targetWord) {
+        for (Word word : DictionaryGUI.dict) {
+            if (word.getWord_target().equals(targetWord)) {
+                return DictionaryGUI.dict.indexOf(word);
+            }
+        }
+        return 0;
     }
+
+    // Method to remove a word from the dictionary
+    public static void removeWord(int inde) {
+        if (inde >= 0 && inde < DictionaryGUI.dict.size()) {
+            DictionaryGUI.dict.remove(inde);
+        } else {
+            System.out.println("Invalid");
+        }
+    }
+
 
     // Method to edit an existing word in the dictionary
     public static boolean editWord(Word editedWord) {
-        for (int i = 0; i < DictionaryGUI.dict.size(); i++) {
-            if (Objects.equals(DictionaryGUI.dict.get(i).getWord_target(), editedWord.getWord_target())) {
-                DictionaryGUI.dict.set(i, editedWord);
+        for (Word word : DictionaryGUI.dict) {
+            if (word.getWord_target().equals(editedWord.getWord_target())) {
+                DictionaryGUI.dict.set(DictionaryGUI.dict.indexOf(word), editedWord);
                 return true;
             }
         }
         return false;
     }
 
-    // Method to lookup a word in the dictionary and return its index
-    public static int DictionaryGUILookup(String targetWord) {
-        for (int i = 1; i < DictionaryGUI.dict.size(); i++) {
-            if (DictionaryGUI.dict.get(i).getWord_target().equals(targetWord)) {
-                return i;
-            }
-        }
-        return 0;
-    }
+
 }
