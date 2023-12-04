@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class plusSceneController {
+    private DictionaryGUIManagement dictionaryManager = new DictionaryGUIManagement();
 
     // FXML annotations to inject components from the FXML file
     @FXML
@@ -45,7 +46,7 @@ public class plusSceneController {
         String definition = addNewDefinition.getText();
 
         // Attempt to add the word to the dictionary using a management class
-        if (DictionaryGUIManagement.addWord(target, spelling, definition)) {
+        if (dictionaryManager.addWord(target, spelling, definition)) {
             // If successful, close the current stage
             closeStage();
         } else {
