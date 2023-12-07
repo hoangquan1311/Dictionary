@@ -22,18 +22,30 @@ public class DictionaryController {
     private String selectedWord = "";
     private int selectedWordIndex = 0;
 
-    @FXML private ListView<String> searchListView;
-    @FXML private TextField searchBar;
-    @FXML private Label target;
-    @FXML private TextArea definition;
-    @FXML private TextArea spelling;
-    @FXML private TextArea GGAPIText;
-    @FXML private TextArea GGAPITranslate;
-    @FXML private Button eraseButton;
-    @FXML private Button speechButton;
-    @FXML private Button editButton;
-    @FXML private Button SaveEditButton;
+    @FXML
+    private ListView<String> searchListView;
+    @FXML
+    private TextField searchBar;
+    @FXML
+    private Label target;
+    @FXML
+    private TextArea definition;
+    @FXML
+    private TextArea spelling;
+    @FXML
+    private TextArea GGAPIText;
+    @FXML
+    private TextArea GGAPITranslate;
+    @FXML
+    private Button eraseButton;
+    @FXML
+    private Button speechButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button SaveEditButton;
 
+    // Handles the event when the "Edit" button is pressed.
     @FXML
     void editButton() {
         editButton.setDisable(true);
@@ -48,6 +60,7 @@ public class DictionaryController {
         SaveEditButton.setVisible(true);
     }
 
+    // Enables editing of the word's information.
     private void enableEditing() {
         definition.setEditable(true);
         definition.setBlendMode(BlendMode.SRC_OVER);
@@ -55,6 +68,7 @@ public class DictionaryController {
         spelling.setBlendMode(BlendMode.SRC_OVER);
     }
 
+    // Disables editing of the word's information.
     private void disableEditing() {
         definition.setEditable(false);
         definition.setBlendMode(BlendMode.DARKEN);
@@ -62,6 +76,7 @@ public class DictionaryController {
         spelling.setBlendMode(BlendMode.DARKEN);
     }
 
+    // Saves the edited word information.
     @FXML
     void SaveEditWord(ActionEvent event) {
         editButton.setDisable(false);
@@ -76,30 +91,35 @@ public class DictionaryController {
         }
     }
 
+    // Displays a success alert after editing.
     private void showEditSuccessAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Sucsess");
+        alert.setTitle("Success");
         alert.setHeaderText("Edit success : " + selectedWord);
         alert.setContentText("Please press UPDATE to save your change");
         alert.showAndWait();
     }
 
+    // Handles the event when the "Translate" button is pressed.
     @FXML
     void TranslateAPIButton(ActionEvent event) throws IOException, InterruptedException {
         GGAPITranslate.setText(TranslatorAPIwithScripts.translate("", "vi", GGAPIText.getText()));
     }
 
+    // Handles the event when the "Speak" button is pressed.
     @FXML
     void sound(ActionEvent event) {
         Speak.speak(selectedWord);
     }
 
+    // Handles the event when the "Export to File" button is pressed.
     @FXML
     void xuatfile() throws IOException {
         dictionaryManager.exportDictGUIDataToFile();
         showUpdateSuccessAlert();
     }
 
+    // Displays a success alert after updating the file.
     private void showUpdateSuccessAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Update");
@@ -107,6 +127,7 @@ public class DictionaryController {
         alert.showAndWait();
     }
 
+    // Disables buttons and text areas.
     private void disableButtonAndTextArea() {
         eraseButton.setDisable(true);
         speechButton.setDisable(true);
@@ -114,6 +135,7 @@ public class DictionaryController {
         disableEditing();
     }
 
+    // Resets the state of buttons and text areas.
     private void resetButtonAndTextAreaState() {
         eraseButton.setDisable(false);
         speechButton.setDisable(false);
@@ -124,14 +146,15 @@ public class DictionaryController {
         disableEditing();
     }
 
+    // Handles the event when the "Minus" button is pressed.
     @FXML
     void minus(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("erase word");
-        alert.setHeaderText("Are you sure delete word ?");
+        alert.setTitle("Erase Word");
+        alert.setHeaderText("Do you want to erase this word ?");
         alert.setContentText(target.getText());
-        ButtonType yesButton = new ButtonType("Yes!!");
-        ButtonType noButton = new ButtonType("No!!");
+        ButtonType yesButton = new ButtonType("Yes");
+        ButtonType noButton = new ButtonType("No");
         alert.getButtonTypes().setAll(yesButton, noButton);
 
         Optional<ButtonType> result = alert.showAndWait();
@@ -142,6 +165,7 @@ public class DictionaryController {
         }
     }
 
+    // Handles the event to erase a word from the dictionary.
     private void handleEraseWord(ActionEvent event) {
         int previousSearchListViewIndex = searchListView.getSelectionModel().getSelectedIndex();
         dictionaryManager.removeWord(selectedWordIndex);
@@ -152,6 +176,7 @@ public class DictionaryController {
         }
     }
 
+    // Clears text fields and disables buttons.
     private void clearTextFieldsAndDisableButtons() {
         target.setText("");
         definition.setText("");
@@ -159,12 +184,14 @@ public class DictionaryController {
         disableButtonAndTextArea();
     }
 
+    // Handles the event when the "Plus" button is pressed.
     @FXML
     void plus(ActionEvent event) throws IOException {
         openPlusScene();
         updateListView();
     }
 
+    // Opens the scene for adding a new word.
     private void openPlusScene() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("plusScene.fxml"));
         Stage primaryStage = new Stage();
@@ -172,6 +199,7 @@ public class DictionaryController {
         primaryStage.showAndWait();
     }
 
+    // Searches for words in the dictionary.
     private ArrayList<String> searchList(String searchWords, ArrayList<Word> dict) {
         List<String> searchResultArray = dict.stream()
                 .filter(word -> word.getWord_target().startsWith(searchWords))
@@ -180,15 +208,18 @@ public class DictionaryController {
         return (ArrayList<String>) searchResultArray;
     }
 
+    // Creates the list view with the search result.
     private void createListView(ArrayList<String> dict) {
         searchListView.getItems().addAll(dict);
     }
 
+    // Updates the list view when there are changes.
     public void updateListView() {
         searchListView.getItems().clear();
         createListView(searchList(searchBar.getText(), DictionaryGUI.dict));
     }
 
+    // Initializes the controller.
     @FXML
     void initialize() throws IOException {
         initializeComponents();
@@ -198,12 +229,14 @@ public class DictionaryController {
         selectFirstItemInListView();
     }
 
+    // Initializes components.
     private void initializeComponents() {
         assert searchBar != null : "fx:id=\"searchBar\" check  FXML file 'gammatest.fxml'.";
         assert target != null : "fx:id=\"copy\" check FXML file 'gammatest.fxml'.";
         assert definition != null : "fx:id=\"defiinition\" check FXML file 'gammatest.fxml'.";
     }
 
+    // Loads dictionary data from a file on application startup.
     private void loadDictionaryDataFromFile() {
         try {
             dictionaryManager.insertDictGUIDataFromFile();
@@ -213,18 +246,22 @@ public class DictionaryController {
         }
     }
 
+    // Updates the list view with data.
     private void updateListViewWithData() {
         createListView(searchList(searchBar.getText(), DictionaryGUI.dict));
     }
 
+    // Sets up a listener for the search bar.
     private void setupSearchBarListener() {
         searchBar.textProperty().addListener((observableValue, s, t1) -> updateListView());
     }
 
+    // Sets up a listener for the list view selection.
     private void setupListViewSelectionListener() {
         searchListView.getSelectionModel().selectedItemProperty().addListener((observableValue, s, t1) -> handleListViewSelection());
     }
 
+    // Handles the selection event in the list view.
     private void handleListViewSelection() {
         if (isSelectedWordNotEmpty()) {
             setSelectedWordAndIndex();
@@ -233,15 +270,18 @@ public class DictionaryController {
         }
     }
 
+    // Checks if the selected word is not empty.
     private boolean isSelectedWordNotEmpty() {
         return searchListView.getSelectionModel().getSelectedItem() != null;
     }
 
+    // Sets the selected word and index.
     private void setSelectedWordAndIndex() {
         selectedWord = searchListView.getSelectionModel().getSelectedItem();
         selectedWordIndex = dictionaryManager.DictionaryGUILookup(selectedWord);
     }
 
+    // Updates text fields and buttons based on the selected word.
     private void updateTextFieldsAndButtons() {
         target.setText(selectedWord);
         spelling.setText(DictionaryGUI.dict.get(selectedWordIndex).getWord_spelling());
@@ -249,12 +289,14 @@ public class DictionaryController {
         resetButtonAndTextAreaState();
     }
 
+    // Handles the selected word index.
     private void handleSelectedWordIndex() {
         if (selectedWordIndex == 0) {
             disableButtonAndTextArea();
         }
     }
 
+    // Selects the first item in the list view.
     private void selectFirstItemInListView() {
         searchListView.getSelectionModel().select(0);
     }

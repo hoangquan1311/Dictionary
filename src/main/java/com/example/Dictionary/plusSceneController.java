@@ -51,7 +51,7 @@ public class plusSceneController {
             closeStage();
         } else {
             // If unsuccessful, show an error alert
-            showErrorAlert("Bản sao", "Lỗi");
+            showErrorAlert("Duplicates", "Error");
         }
     }
 
