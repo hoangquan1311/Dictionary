@@ -114,7 +114,7 @@ public class DictionaryController {
 
     // Handles the event when the "Export to File" button is pressed.
     @FXML
-    void xuatfile() throws IOException {
+    void exportfile() throws IOException {
         dictionaryManager.exportDictGUIDataToFile();
         showUpdateSuccessAlert();
     }
