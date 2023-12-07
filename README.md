@@ -25,7 +25,17 @@ The application is designed to support searching for English words and their mea
   4. To edit a word, click the Edit button (Pencil icon).
   5. To save the changes, click the "LƯU" button 
   6. To pronounce the word, click the Pronounce button (Speaker icon).
-  7. To exit the application, click the Exit button (Cross icon).
+  7. To practice, click the Practice button (Play icon), then the application will display a Game window.
+      * In the Game window, click the Start button to start the game.
+      * The application will display a word that is removed some letters, you need to enter the missing letters in the text box and click the Check button to check the answer.
+      * If the answer is correct, the application will display a new word and increase the score by 1.
+      * If the answer is incorrect, the application will display a new word and decrease the score by 1.
+      * To exit the game, click the Exit button (Cross icon).
+      * To play again, click the Play again button (Play icon).
+      * To save the score, click the Save button (Disk icon).
+      * To load the score, click the Load button (Folder icon).
+      * To reset the score, click the Reset button (Reset icon).
+  8. To exit the application, click the Exit button (Cross icon).
 ## Demo
 ![Demo](https://drive.google.com/file/d/16Uj-bukftgo0Ug8Ic3wSBBzZAsPCMz-Y/view?usp=sharing)
 ## Future improvements
