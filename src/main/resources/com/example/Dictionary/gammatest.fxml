@@ -39,7 +39,7 @@
                </image>
             </ImageView>
             <Line endX="-77.0" endY="52.50001525878906" layoutX="348.0" layoutY="27.0" startX="-77.0" startY="-24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Button layoutX="954.0" layoutY="38.0" mnemonicParsing="false" onAction="#xuatfile" style="-fx-border-color: black;" text="UPDATE" textAlignment="CENTER" />
+            <Button layoutX="954.0" layoutY="38.0" mnemonicParsing="false" onAction="#exportfile" style="-fx-border-color: black;" text="UPDATE" textAlignment="CENTER" />
             <Button fx:id="gameButton" layoutX="884.0" layoutY="40.0" mnemonicParsing="false" onAction="#openGameWindow" text="game" />
          </children>
       </AnchorPane>
@@ -104,7 +104,7 @@
                                     </Button>
                                     <Button fx:id="editButton" alignment="CENTER" layoutX="406.0" layoutY="10.0" mnemonicParsing="false" onAction="#editButton" prefHeight="32.0" prefWidth="37.0">
                                        <graphic>
-                                          <ImageView fitHeight="17.0" fitWidth="26.0" onMouseClicked="#xuatfile" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fitHeight="17.0" fitWidth="26.0" onMouseClicked="#exportfile" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../../../Picture/2.png" />
                                              </image>
