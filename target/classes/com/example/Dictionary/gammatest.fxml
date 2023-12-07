@@ -103,7 +103,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="eraseButton" alignment="CENTER" layoutX="456.0" layoutY="10.0" mnemonicParsing="false" onAction="#minus" prefHeight="32.0" prefWidth="37.0" text="Xoa">
+                                    <Button fx:id="eraseButton" alignment="CENTER" layoutX="456.0" layoutY="10.0" mnemonicParsing="false" onAction="#minus" prefHeight="32.0" prefWidth="37.0" text="Delete">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
