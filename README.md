@@ -12,7 +12,7 @@ The application is designed to support searching for English words and their mea
   3. The application has one types of dictionaries: English-Vietnamese.
   4. The application use E_V.txt files to store data.
 ## UML diagram
-[UML diagram]()
+[UML diagram](https://drive.google.com/file/d/1pWqViAebn5XaW57bH1O0-PL4V27439a8/view?usp=sharing)
 ## Installation
   1. Clone the project from the repository.
   2. Open the project in the IDE.
@@ -27,7 +27,7 @@ The application is designed to support searching for English words and their mea
   6. To pronounce the word, click the Pronounce button (Speaker icon).
   7. To exit the application, click the Exit button (Cross icon).
 ## Demo
-![Demo](
+![Demo](https://drive.google.com/file/d/16Uj-bukftgo0Ug8Ic3wSBBzZAsPCMz-Y/view?usp=sharing)
 ## Future improvements
   1. Add more dictionaries.
   2. Add more complex games.
