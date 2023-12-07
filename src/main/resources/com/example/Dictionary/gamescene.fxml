@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="406.0" prefWidth="526.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Dictionary.gameController">
+    <children>
+        <TextArea fx:id="questionTextArea" layoutX="14.0" layoutY="14.0" prefHeight="214.0" prefWidth="494.0" />
+        <Button layoutX="102.0" layoutY="328.0" mnemonicParsing="false" onAction="#handlePlayGameButton" text="Play Game" />
+        <Button fx:id="okAnswer" layoutX="299.0" layoutY="328.0" mnemonicParsing="false" onAction="#okBtnListener" text="Submit Answer" />
+      <TextField fx:id="answerBox" layoutX="16.0" layoutY="259.0" prefHeight="26.0" prefWidth="157.0" />
+    </children>
+</AnchorPane>
