@@ -118,7 +118,6 @@ public class DictionaryController {
         dictionaryManager.exportDictGUIDataToFile();
         showUpdateSuccessAlert();
     }
-
     // Displays a success alert after updating the file.
     private void showUpdateSuccessAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
